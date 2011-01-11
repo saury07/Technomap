@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This file was written by the JAVA GraphML Library.-->
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="name" for="node" attr.name="name" attr.type="string"/>
+  <key id="tags" for="node" attr.name="tags" attr.type="string"/>
+  <key id="author" for="node" attr.name="author" attr.type="string"/>
+  <key id="client" for="node" attr.name="client" attr.type="string"/>
+  <key id="company" for="node" attr.name="company" attr.type="string"/>
+  <key id="description" for="node" attr.name="description" attr.type="string"/>
+  <key id="urlproject" for="node" attr.name="urlproject" attr.type="string"/>
+  
+ <graph id="G" edgedefault="undirected"> 
+ 
+  <node id="1"> 
+    <data key="author">Interactives</data> 
+    <data key="client">Top Trumps</data> 
+    <data key="company">Inition</data> 
+    <data key="description">Quizz game using augmented reality and markers</data>  
+    <data key="name">Top Trumps 3D</data> 
+    <data key="tags">At a toy fair, Winning Moves revealed that they had started to make a Top Trumps 3D in which the pictures on the cards became 3D. A number of titles have been scheduled for release like this. You have to download the software and then use a Webcam to show the cards to. This brings a 3D image of the image on the card. You answer questions to show the 3D image. There are a number of packs coming out like this, the first was Bugs released in May 2009.
+There are many things you can do with the 3D image that include making it move. You could make the 3D tarantula from Bugs move, dance, slide on ice, hunt and other things. For the Transformers: Revenge of the Fallen, you could drive Optimus Prime in truck mode and transform him to robot mode.
+There are various Top Trumps Showcase cards released with the Hamleys 3D announcement event that can show you images. These include the spider (non moveable) Optimus prime (robot mode only, non moveable) and Wrestling arena with a fist coming through it (WWE). These can be used with the downloadable Hamleys Showcase content from the main site.
+Winning Moves has been often criticized for releasing the pack but not releasing the 3D content for weeks after the release of the pack. This has led to outrage from buyers of the pack as they would expect the 3D content to be out the same time as the pack.
+Another common feature for the 3D feature of cards is to feature video clips. For example, the Marvel Ultimate Villains pack, released with the Daily Mirror and the Daily Record, has previews of Iron Man 2 in.
+Winning Moves originally had it so that you had to download a different programme for each 3D pack. However, in 2010, they made a 3D hub which would update when they updated it with new packs. A version for Apple MACs is coming soon.</data>  
+    <data key="urlproject">http://www.youtube.com/watch?v=A3PwcPLxa7A</data> 
+  </node> 
+  <node id="2"> 
+
+    <data key="author">Bruce Branit</data> 
+    <data key="client"></data> 
+    <data key="company">Branit VFX</data> 
+    <data key="description">Art video of complete virtual reality</data>  
+    <data key="name">World Builder</data> 
+    <data key="tags">cool stuf </data>
+    <data key="urlproject">http://www.youtube.com/watch?v=CXErST5NST8</data> 
+  </node> 
+  
+  <node id="3">  
+    <data key="author">Marie Brayer</data> 
+    <data key="client">Inition</data> 
+    <data key="company">Inition</data> 
+    <data key="description">Controller free interaction</data> 
+    <data key="name">Pamplemousse</data> 
+    <data key="tags">Pamplemousse is Inition's new controler-free interaction system. It requires only a webcam, a PC and basic configuration to get started. 
+The main frameworks involved are OpenCV and openframeworks (C++).
+More info about Marie Brayer's work there : marie.brayer.free.fr/Portfolio</data> 
+    <data key="urlproject">http://vimeo.com/14579193</data> 
+  </node> 
+  <node id="0"> 
+    <data key="author">Alioscopy</data> 
+    <data key="client"></data> 
+    <data key="company">Alioscopy</data> 
+    <data key="description">Actual 3D display without glasses</data> 
+    <data key="name">Alioscopy screen</data> 
+    <data key="tags">3D is spectacular, eye catching and entertaining, but it can also be used as a powerful decision making tool. Alioscopy 3D screens free viewers from annoying eyewear. They can amaze, attract and grasp the attention of the public as well as enhance the understanding of complex images in a demanding professional environment.
+
+Alioscopy 3D screens deliver an impressive immersive experience, with unmatched 3D pop-out and depth effects on video screens. They display sharp and bright 3D images, while remaining 2D compatible. Out-of-Home communication, advertizing, marketing,special events scientific visualization can now benefit from the striking impact of 3D. This groundbreaking technology opens new opportunities in many markets and industries.
+
+Alongside its range of glasses-free 3D displays, Alioscopy provides innovative and creative 3D services, including content creation, training and support, as well as 3D software and licensing. Alioscopy is also supported by a growing community of computer artists around the world, with broad 3D creative skills.
+</data> 
+    <data key="urlproject">http://www.youtube.com/watch?v=9M4Z2pMfj-Q</data> 
+  </node> 
+  <node id="4"> 
+    <data key="author">Pete Woods and co</data> 
+    <data key="client"></data> 
+    <data key="company">"Axis Film and IN, Inition</data>  
+    <data key="description">The fastest car 3D film</data> 
+    <data key="name">Fastest Car 3D Movie</data> 
+    <data key="tags">Helicopters, chase cars, a second SLS camera car, 72 crew. Not to mention a windswept island in the Irish Sea, sheep, and no crash barriers. How Manx Meister was made in 7 hours one Tuesday on the Isle of Man. An In&#169;/Greenlight TV Production. </data> 
+    <data key="urlproject">http://www.youtube.com/watch?v=ikQd8vs1MHw</data> 
+  </node> 
+  <node id="5"> 
+    <data key="author">Interactives</data> 
+    <data key="client">Tissot</data> 
+    <data key="company">Inition</data> 
+    <data key="description">Augmented retail application for Tissot</data> 
+    <data key="name">Holition</data> 
+    <data key="tags">Holition's excellent augmented reality marketing campaign that enables you to try on watches and jewellery before you buy. The campaign is running live in Selfridges on Oxford Street where they have placed hi-tech touch screens and staff are handing out wristbands with markers to passers by.
+
+Users who take part are able to try on the range of Tissot watches by holding up their wrist to the camera and seeing the watch appear on their wrist.
+
+The campaign is an excellent use of augmented reality marketing providing an interactive experience to engage with users, its safe to say that the demo had the wow factor yesterday, I highly recommend giving the demo a try and experiencing it for yourself. If you can&#8217;t make it down to Oxford Street and you still want to try the demo, just visit www.tissot.ch/reality/ and follow the instructions.</data> 
+    <data key="urlproject">http://www.youtube.com/watch?v=tdEaAYYgP5c</data> 
+  </node> 
+  <node id="6"> 
+    <data key="author">Interactives</data> 
+    <data key="client"></data> 
+    <data key="company">Inition</data> 
+    <data key="description">Gesture tracking</data> 
+    <data key="name">Lila</data> 
+    <data key="tags">LILA from Inition - the first system where the public can become a 3D character in real-time, controlling every limb of the virtual character with their own.
+
+Using our LILA system, members of the public are able to navigate &#8216;minority report&#8217; style interfaces, select avatars to become, and interact with virtual scenes and objects much like controlling a video game with their entire body. All with no special suits or markers ----You just walk in!
+
+Customers are able to start playing with no calibration and wearing no special tracking device. The system tracks the user in their street clothing and transfers the motion live to a 3d character of their choice. The finished animation and film can be sent to a website for download or to the user&#8217;s mobile phone. The system can be set up as chargeable by mobile phone.
+
+The LILA System consists of a number of small cameras placed around the area to be captured, a reflective background, and the Processor and PC with your customised LILA software.
+The area can be 3m x 3m, 5m x 5m or variations as requested. A rigid lightbox version is available for temporary exhibitions or tours
+Both the live video of the person being captured and the virtual character and scene can be displayed or projected on large screens as desired.</data> 
+    
+    <data key="urlproject">http://www.youtube.com/watch?v=vwliqDSRkyE</data> 
+  </node> 
+  <node id="7"> 
+    <data key="author">Mark</data> 
+    <data key="client">God</data> 
+    <data key="company">Heaven inc</data> 
+    <data key="description">Grass like 3D</data> 
+    <data key="name"> Grass 3D example</data> 
+    <data key="tags">virtual grass in 3D for sensory interaction</data> 
+    <data key="urlproject">http://www.huddletogether.com/projects/lightbox2/images/image-2.jpg</data>  
+  </node> 
+
+  <edge source="1" target="2"></edge>
+  <edge source="1" target="3"></edge>
+  <edge source="2" target="0"></edge>
+  <edge source="3" target="4"></edge>
+  <edge source="5" target="4"></edge>
+  <edge source="6" target="2"></edge>
+  <edge source="0" target="4"></edge>
+  <edge source="7" target="4"></edge>
+   
+  
+  </graph>
+</graphml> 
