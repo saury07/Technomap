@@ -13,6 +13,28 @@ xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdr
   <graph id="G" edgedefault="undirected">
  
 <node id="0">
+	  <data key="author">Interactives</data>
+	  <data key="client">Top Trumps</data>
+	  <data key="company">Inition</data>
+	  <data key="description">Winning Moves was founded by four highly respected professionals in the games industry, who between them have over 100 years of experience.
+
+Tom Kremer: Europe's most successful game agent. Tom's greatest claim to fame is having found and licensed the Rubik's Cube from behind the "Iron Curtain." Tom is also a highly talented games creator.
+
+Alex Randolph: Europe's most distinguished games inventor who, sadly, died in February 2004.
+
+Mike Meyers: The long-time head of research and development for Milton Bradley, one of America's best-known games brands.
+
+Phil E. Orbanes: The long-time head of research and development for another of America's great games brands, Parker Brothers. Phil is the world's leading expert on the game Monopoly, as well as author of several books and creator of best-selling games.
+
+With such a wealth of experience, creativity and an unerring instinct for what makes a great game, Winning Moves was established to bring you a mixture of classic games from yesteryear as well as brand new games - games that provide entertainment and fun for you, your family and your friends!
+
+In the United Kingdom, Winning Moves is the leading maker of card games, including the immensely popular Top Trumps. Winning Moves also creates limited editions of the world's best-loved game, Monopoly.</data>
+	  <data key="name">Top Trumps 3D</data>
+	  <data key="tags">  3d, glasses-free 3d, augmented reality, computer vision, 2d</data>
+	  <data key="urlproject">http://www.youtube.com/watch?v=A3PwcPLxa7A</data>
+  </node>
+
+<node id="1">
 	  <data key="author">Bruce Branit</data>
 	  <data key="client"></data>
 	  <data key="company">Branit VFX</data>
@@ -22,7 +44,7 @@ xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdr
 	  <data key="urlproject">http://www.youtube.com/watch?v=CXErST5NST8</data>
   </node>
 
-<node id="1">
+<node id="2">
 	  <data key="author">Pete Woods and co</data>
 	  <data key="client"></data>
 	  <data key="company">"Axis Film and IN, Inition</data>
@@ -32,7 +54,7 @@ xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdr
 	  <data key="urlproject">http://www.youtube.com/watch?v=ikQd8vs1MHw&amp;feature=player_embedded#at=159</data>
   </node>
 
-<node id="2">
+<node id="3">
 	  <data key="author">Marie Brayer</data>
 	  <data key="client">Inition</data>
 	  <data key="company">Inition</data>
@@ -42,7 +64,7 @@ xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdr
 	  <data key="urlproject">http://vimeo.com/14579193</data>
   </node>
 
-<node id="3">
+<node id="4">
 	  <data key="author">Alioscopy</data>
 	  <data key="client"></data>
 	  <data key="company">Alioscopy</data>
@@ -50,16 +72,6 @@ xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdr
 	  <data key="name">Alioscopy screen</data>
 	  <data key="tags"></data>
 	  <data key="urlproject">http://www.youtube.com/watch?v=9M4Z2pMfj-Q</data>
-  </node>
-
-<node id="4">
-	  <data key="author">Interactives</data>
-	  <data key="client">Top Trumps</data>
-	  <data key="company">Inition</data>
-	  <data key="description">Quizz game using augmented reality and markers</data>
-	  <data key="name">Top Trumps 3D</data>
-	  <data key="tags">  3d, glasses-free 3d, augmented reality, computer vision, 2d</data>
-	  <data key="urlproject">http://www.youtube.com/watch?v=A3PwcPLxa7A</data>
   </node>
 
 <node id="5">
@@ -94,16 +106,16 @@ xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdr
 
 <!-- edges should be defined here-->
 
-<edge source="4" target="0"></edge>
+<edge source="1" target="0"></edge>
+<edge source="3" target="0"></edge>
+<edge source="5" target="0"></edge>
 <edge source="7" target="0"></edge>
-<edge source="4" target="2"></edge>
-<edge source="5" target="2"></edge>
-<edge source="0" target="4"></edge>
-<edge source="2" target="4"></edge>
-<edge source="5" target="4"></edge>
-<edge source="7" target="4"></edge>
-<edge source="2" target="5"></edge>
-<edge source="4" target="5"></edge>
+<edge source="0" target="1"></edge>
+<edge source="7" target="1"></edge>
+<edge source="0" target="3"></edge>
+<edge source="5" target="3"></edge>
+<edge source="0" target="5"></edge>
+<edge source="3" target="5"></edge>
 <edge source="0" target="7"></edge>
-<edge source="4" target="7"></edge></graph>
+<edge source="1" target="7"></edge></graph>
 </graphml>
