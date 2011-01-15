@@ -115,20 +115,34 @@ public class GraphView extends JPanel {
 	private Visualization m_vis;
 	public JPanel rightPanel;
 	public JPanel optionPanel;
-
+	public JFrame parentWindow;
+	public String pathToGraph;
+	
+	public GraphView(Graph g, String label, JFrame parent){
+		this(g,label);
+		this.parentWindow = parent;
+	}
+	
 	public GraphView(Graph g, String label) {
 		super(new BorderLayout());
-
-
-		Graph gr0 = null;
-		try {
-			gr0 = new GraphMLReader().readGraph("/test-writing.xml");
-		} catch ( DataIOException e ) {
-			e.printStackTrace();
-			System.err.println("Error loading graph. Exiting...");
-			System.exit(1);
+		
+		
+		Graph gr1 =null;
+		if(g != null){
+			gr1 = g;
+			System.out.println("On recupere le graph parametre");
 		}
-		final Graph gr = gr0;
+		else {
+			try {
+				gr1 = new GraphMLReader().readGraph("data/test-writing.xml");
+			} catch (DataIOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				System.exit(0);
+			};
+			System.out.println("On prend le graph defaut");
+		}
+		final Graph gr = gr1;
 		// create a new, empty visualization for our data
 		m_vis = new Visualization();
 
@@ -382,6 +396,11 @@ public class GraphView extends JPanel {
 
 	}
 
+	public void close(){
+		if(this.parentWindow != null)
+			this.parentWindow.dispose();
+	}
+	
 	public void setGraph(Graph g, String label) {
 		// update labeling
 		DefaultRendererFactory drf = (DefaultRendererFactory)
@@ -389,7 +408,7 @@ public class GraphView extends JPanel {
 		((LabelRenderer)drf.getDefaultRenderer()).setTextField(label);
 
 		// update graph
-		m_vis.removeGroup(graph);
+		//m_vis.removeGroup(graph);
 		VisualGraph vg = m_vis.addGraph(graph, g);
 		m_vis.setValue(edges, null, VisualItem.INTERACTIVE, Boolean.FALSE);
 		VisualItem f = (VisualItem)vg.getNode(0);
@@ -411,15 +430,15 @@ public class GraphView extends JPanel {
 			label = args[1];
 		}
 
-		JFrame frame = demo(datafile, label);
+		JFrame frame = demo(null, label);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	public static JFrame demo() {
-		return demo((String)null, "label");
+		return demo((String)null, "label", true);
 	}
 
-	public static JFrame demo(String datafile, String label) {
+	public static JFrame demo(String datafile, String label, boolean bool) {
 		Graph g = null;
 		if ( datafile == null ) {
 			g = GraphLib.getGrid(15,15);
@@ -437,7 +456,8 @@ public class GraphView extends JPanel {
 
 
 	public static JFrame demo(Graph g, String label) {
-		final GraphView view = new GraphView(g, label);
+		JFrame frame = new JFrame("p r e f u s e  |  g r a p h v i e w");
+		final GraphView view = new GraphView(g, label, frame);
 
 		// set up menu
 		JMenu dataMenu = new JMenu("Data");
@@ -448,7 +468,7 @@ public class GraphView extends JPanel {
 		menubar.add(dataMenu);
 
 		// launch window
-		JFrame frame = new JFrame("p r e f u s e  |  g r a p h v i e w");
+		
 		frame.setJMenuBar(menubar);
 		frame.setContentPane(view);
 		frame.pack();
@@ -496,11 +516,14 @@ public class GraphView extends JPanel {
 					KeyStroke.getKeyStroke("ctrl O"));
 		}
 		public void actionPerformed(ActionEvent e) {
-			Graph g = IOLib.getGraphFile(m_view);
+			Graph g = IOLib.getGraphFile(null);
 			if ( g == null ) return;
+			
 			String label = getLabel(m_view, g);
 			if ( label != null ) {
-				m_view.setGraph(g, label);
+				JFrame frame = demo(g, label);
+				m_view.close();
+				//m_view.setGraph(g, label);
 			}
 		}
 		public static String getLabel(Component c, Graph g) {
