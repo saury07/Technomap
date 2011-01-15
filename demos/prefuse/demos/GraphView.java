@@ -344,8 +344,12 @@ public class GraphView extends JPanel {
 		final TupleSet focus = m_vis.getFocusGroup(FOCUS);
 		// create the search query binding
 		SearchQueryBinding searchQ = new SearchQueryBinding(gr.getNodeTable(), "author");
+		searchQ.addField("name");
+		searchQ.addField("client");
+		searchQ.addField("company");
+		searchQ.addField("tags");
 		final SearchTupleSet search = searchQ.getSearchSet(); 
-
+		
 		// create the listener that collects search results into a focus set
 		search.addTupleSetListener(new TupleSetListener() {
 			public void tupleSetChanged(TupleSet t, Tuple[] add, Tuple[] rem) {

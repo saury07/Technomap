@@ -25,6 +25,7 @@ public class SearchQueryBinding extends DynamicQueryBinding {
     private SearchTupleSet m_set;
     private Listener m_lstnr;
     private Object m_lock;
+    private TupleSet ts;
     
     /**
      * Create a new SearchQueryBinding over the given set and data field.
@@ -33,6 +34,7 @@ public class SearchQueryBinding extends DynamicQueryBinding {
      */
     public SearchQueryBinding(TupleSet ts, String field) {
         this(ts, field, new PrefixSearchTupleSet());
+        this.ts = ts;
     }
     
     /**
@@ -55,6 +57,10 @@ public class SearchQueryBinding extends DynamicQueryBinding {
         
         if ( ts instanceof VisualTupleSet )
             m_lock = ((VisualTupleSet)ts).getVisualization();
+    }
+    
+    public void addField(String field){
+    	m_set.index(ts.tuples(), field);
     }
     
     /**
