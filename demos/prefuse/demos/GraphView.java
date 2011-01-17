@@ -66,7 +66,9 @@ import prefuse.action.RepaintAction;
 import prefuse.action.animate.ColorAnimator;
 import prefuse.action.assignment.ColorAction;
 import prefuse.action.assignment.DataColorAction;
+import prefuse.action.assignment.FontAction;
 import prefuse.action.assignment.SizeAction;
+import prefuse.action.assignment.StrokeAction;
 import prefuse.action.filter.GraphDistanceFilter;
 import prefuse.action.layout.graph.ForceDirectedLayout;
 import prefuse.activity.Activity;
@@ -94,6 +96,7 @@ import prefuse.util.ColorLib;
 import prefuse.util.FontLib;
 import prefuse.util.GraphLib;
 import prefuse.util.GraphicsLib;
+import prefuse.util.StrokeLib;
 import prefuse.util.display.DisplayLib;
 import prefuse.util.display.ItemBoundsListener;
 import prefuse.util.force.ForceSimulator;
@@ -124,7 +127,7 @@ public class GraphView extends JPanel {
 	public JFrame parentWindow;
 	public String pathToGraph;
 	static String webXML = "http://www.google.com";
-	
+
 	public GraphView(Graph g, String label, JFrame parent){
 		this(g,label);
 		this.parentWindow = parent;
@@ -182,14 +185,16 @@ public class GraphView extends JPanel {
 		LabelRenderer lab = new LabelRenderer("name");
 		lab.setRoundedCorner(8, 8);
 
+
 		LabelRenderer tr = new LabelRenderer(null, "image");
 		tr.setImageTextPadding(10);
 		tr.setImagePosition(Constants.TOP);
 		tr.setHorizontalAlignment(Constants.CENTER);
 		tr.setVerticalAlignment(Constants.BOTTOM);
-		tr.setHorizontalPadding(0);
-		tr.setVerticalPadding(0);
+		tr.setHorizontalPadding(6);
+		tr.setVerticalPadding(3);
 		tr.setMaxImageDimensions(100,100);
+		tr.setRoundedCorner(15, 15);
 		DefaultRendererFactory f = new DefaultRendererFactory(tr);
 		f.add(new InGroupPredicate("graph.edges.tags"), tr);
 		m_vis.setRendererFactory(f);
@@ -213,7 +218,6 @@ public class GraphView extends JPanel {
 				VisualItem.FILLCOLOR, ColorLib.rgb(200,200,255));
 		fill.add(VisualItem.FIXED, ColorLib.rgb(255,100,100));
 		fill.add(VisualItem.HIGHLIGHT, ColorLib.rgb(255,200,125));
-
 
 
 		ActionList draw = new ActionList();
@@ -240,14 +244,31 @@ public class GraphView extends JPanel {
 				VisualItem.TEXTCOLOR, ColorLib.gray(0));
 		ColorAction edges = new ColorAction("graph.edges",
 				VisualItem.STROKECOLOR, ColorLib.gray(200));
+		ColorAction bordercolor = new ColorAction("graph.nodes", VisualItem.STROKECOLOR, ColorLib.rgb(0, 0, 0));
+
 
 		NodeSize nodes_size = new NodeSize();
 
 		ActionList color = new ActionList();
 		color.add(text);
 		color.add(edges);
+		color.add(bordercolor);
 		color.add(nodes);
 		color.add(nodes_size);
+
+		// Fonts
+		FontAction font = new FontAction("graph.nodes", FontLib.getFont(
+				"Arial", 20));
+		ActionList fonts = new ActionList();
+
+		fonts.add(font);
+
+		StrokeAction strokeNode = new StrokeAction("graph.nodes",
+				StrokeLib.getStroke(2));
+		// StrokeAction strokeEdge= new StrokeAction("graph.edges",
+		// StrokeLib.getStroke(8));
+		ActionList strokes = new ActionList();
+		strokes.add(strokeNode);
 
 
 		// finally, we register our ActionList with the Visualization.
@@ -257,7 +278,9 @@ public class GraphView extends JPanel {
 
 
 		m_vis.putAction("draw", draw);
+		m_vis.putAction("font", fonts);
 		m_vis.putAction("color", color);
+		m_vis.putAction("stroke", strokes);
 		m_vis.putAction("animate", animate);
 		m_vis.runAfter("draw", "animate");
 
@@ -306,7 +329,7 @@ public class GraphView extends JPanel {
 				// Paint a gradient from top to bottom
 				GradientPaint gp = new GradientPaint(
 						0, 0, Color.white,
-						0, h, Color.pink );
+						0, h, ColorLib.getGrayscale(230) );
 
 				gr.setPaint( gp );
 				gr.fillRect( 0, 0, w, h );
@@ -414,7 +437,7 @@ public class GraphView extends JPanel {
 		searcher.setShowCancel(true); // don't show the cancel query button
 		searcher.setShowBorder(true); // don't show the search box border
 		searcher.setFont(FontLib.getFont("Georgia", Font.PLAIN, 22));
-		//searcher.setBackground(ColorLib.getGrayscale(50));
+		searcher.setBackground(ColorLib.getGrayscale(230));
 		searcher.setForeground(ColorLib.getColor(100,100,75));
 		leftPanel.add(searcher); // add the search box as a sub-component of the display
 		searcher.setBounds(10, getHeight()-40, 120, 30);
@@ -427,6 +450,8 @@ public class GraphView extends JPanel {
 		// now we run our action list
 		m_vis.run("draw");
 		m_vis.run("color");
+		m_vis.run("font");
+		m_vis.run("stroke");
 
 	}
 
@@ -782,10 +807,23 @@ class NodeInfoControl extends ControlAdapter {
 
 	}
 
+
 	@Override
 	public void itemClicked(VisualItem item, MouseEvent e) {
 		// TODO Auto-generated method stub
 		super.itemClicked(item, e);
+
+		Display display = (Display) e.getComponent();
+		if (!display.isTranformInProgress()) {
+			if (UILib.isButtonPressed(e, LEFT_MOUSE_BUTTON)) {
+				Visualization m_vis = display.getVisualization();
+				Rectangle2D bounds = m_vis.getBounds(Visualization.ALL_ITEMS);
+				GraphicsLib.expand(bounds,
+						50 + (int) (1 / display.getScale()));
+				DisplayLib.fitViewToBounds(display, bounds, 2000);
+			}
+
+		}
 		//System.out.println(item.get("author")+" node has been clicked");
 		//optionPanel.setBackground(Color.blue);
 		optionPanel.removeAll();
@@ -793,7 +831,13 @@ class NodeInfoControl extends ControlAdapter {
 		optionPanel.add(generatePaneFromNode(item));
 		optionPanel.validate();
 
+
+		//item.setStroke(StrokeLib.getStroke(8));
+		//item.setStrokeColor(ColorLib.gray(0));
+
 	}
+
+
 
 	@Override
 	public void itemEntered(VisualItem item, MouseEvent e) {
