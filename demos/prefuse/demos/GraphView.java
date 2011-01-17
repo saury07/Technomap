@@ -326,7 +326,7 @@ public class GraphView extends JPanel {
 		split.setRightComponent(this.rightPanel);
 		split.setOneTouchExpandable(true);
 		split.setContinuousLayout(false);
-		split.setDividerLocation(700);
+		split.setDividerLocation(800);
 
 		//create the node viewer panel
 		JPanel fp2 = new JPanel();
@@ -784,7 +784,9 @@ class NodeInfoControl extends ControlAdapter {
 
 
 		final String url = ""+item.get("urlproject");
-		JLabel picture = new JLabel(new ImageIcon(getNodePicture(item)));
+		ImageIcon image = new ImageIcon(getNodePicture(item));
+		JLabel picture = new JLabel(image);
+
 		picture.setAlignmentX(1f);
 		picture.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		picture.addMouseListener(new MouseAdapter(){
@@ -871,7 +873,9 @@ class NodeInfoControl extends ControlAdapter {
 			e.printStackTrace();
 		}
 		//System.out.println(url);
-		return java.awt.Toolkit.getDefaultToolkit().getDefaultToolkit().createImage(url);
+		Image ret = java.awt.Toolkit.getDefaultToolkit().getDefaultToolkit().createImage(url);
+		ret = ret.getScaledInstance(140, 100, 0);
+		return ret;
 	}
 
 	private String getImage(String url){
