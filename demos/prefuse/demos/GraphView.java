@@ -214,10 +214,10 @@ public class GraphView extends JPanel {
 		int hops = 30;
 		final GraphDistanceFilter filter = new GraphDistanceFilter(graph, hops);
 
-		ColorAction fill = new ColorAction(nodes, 
-				VisualItem.FILLCOLOR, ColorLib.rgb(200,200,255));
-		fill.add(VisualItem.FIXED, ColorLib.rgb(255,100,100));
-		fill.add(VisualItem.HIGHLIGHT, ColorLib.rgb(255,200,125));
+		//ColorAction fill = new ColorAction(nodes, 
+		//		VisualItem.FIXED, ColorLib.rgb(200,200,255));
+		//fill.add(VisualItem.FIXED, ColorLib.rgb(255,100,100));
+		//fill.add(VisualItem.HIGHLIGHT, ColorLib.rgb(255,200,125));
 
 
 		ActionList draw = new ActionList();
@@ -238,7 +238,8 @@ public class GraphView extends JPanel {
 		NodeColor nodes = new NodeColor("graph.nodes", color_criteria,
 				Constants.NOMINAL, VisualItem.FILLCOLOR, palette);
 
-		nodes.add(VisualItem.HIGHLIGHT, ColorLib.rgb(255,200,125));
+		nodes.add(VisualItem.FIXED, ColorLib.rgb(0,157,253));
+		nodes.add(VisualItem.HIGHLIGHT, ColorLib.rgb(130,223,243));
 
 		ColorAction text = new ColorAction("graph.nodes",
 				VisualItem.TEXTCOLOR, ColorLib.gray(0));
@@ -255,7 +256,9 @@ public class GraphView extends JPanel {
 		color.add(bordercolor);
 		color.add(nodes);
 		color.add(nodes_size);
-
+		
+		animate.add(nodes);
+		
 		// Fonts
 		FontAction font = new FontAction("graph.nodes", FontLib.getFont(
 				"Arial", 20));
@@ -410,8 +413,8 @@ public class GraphView extends JPanel {
 
 				// invalidate changed tuples, add them all to the focus set
 				focus.clear();
-				System.out.println("Search results : "+add.length);
-				System.out.println("Items to remove : "+rem.length);
+				//System.out.println("Search results : "+add.length);
+				//System.out.println("Items to remove : "+rem.length);
 				for ( int i=0; i<add.length; ++i ) {
 					focus.addTuple(add[i]);
 				}
@@ -419,7 +422,7 @@ public class GraphView extends JPanel {
 					//((VisualItem)rem[i]).setValidated(false);
 					focus.removeTuple(rem[i]);
 				}
-				System.out.println("Tuples in search : "+focus.getTupleCount());
+				//System.out.println("Tuples in search : "+focus.getTupleCount());
 
 
 				m_vis.run("animate");
@@ -740,7 +743,7 @@ class NodeSize extends SizeAction{
 				Tuple t1 = (Tuple)item.getSourceTuple();
 				if(t.getRow() == t1.getRow()){
 
-					return 2.0;
+					return 1.4;
 
 				}
 			}
@@ -843,6 +846,7 @@ class NodeInfoControl extends ControlAdapter {
 	public void itemEntered(VisualItem item, MouseEvent e) {
 		// TODO Auto-generated method stub
 		super.itemEntered(item, e);
+		
 	}
 
 	private JPanel generatePaneFromNode(VisualItem item){
