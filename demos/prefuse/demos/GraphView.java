@@ -18,7 +18,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.geom.Rectangle2D;
+import java.io.BufferedInputStream;
+import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -117,20 +123,44 @@ public class GraphView extends JPanel {
 	public JPanel optionPanel;
 	public JFrame parentWindow;
 	public String pathToGraph;
+	static String webXML = "http://www.google.com";
 	
 	public GraphView(Graph g, String label, JFrame parent){
 		this(g,label);
 		this.parentWindow = parent;
 	}
-	
+
 	public GraphView(Graph g, String label) {
 		super(new BorderLayout());
-		
-		
+
+
 		Graph gr1 =null;
+
+		//Let's get the file !
+		DataInputStream datastream = null;
+		try{
+			URL url = new URL(GraphView.webXML);
+			InputStream stream = url.openStream();
+			datastream = new DataInputStream(new BufferedInputStream(stream));
+			String line = "";
+			BufferedWriter out = new BufferedWriter(new FileWriter("data/web-output.xml"));
+			while((line = datastream.readLine()) != null){
+				out.write(line);
+			}
+			out.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			try {
+				datastream.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		}
+
 		if(g != null){
 			gr1 = g;
-			System.out.println("On recupere le graph parametre");
+			//System.out.println("On recupere le graph parametre");
 		}
 		else {
 			try {
@@ -140,7 +170,7 @@ public class GraphView extends JPanel {
 				e1.printStackTrace();
 				System.exit(0);
 			};
-			System.out.println("On prend le graph defaut");
+			//System.out.println("On prend le graph defaut");
 		}
 		final Graph gr = gr1;
 		// create a new, empty visualization for our data
@@ -203,7 +233,7 @@ public class GraphView extends JPanel {
 
 		NodeColor nodes = new NodeColor("graph.nodes", color_criteria,
 				Constants.NOMINAL, VisualItem.FILLCOLOR, palette);
-		
+
 		nodes.add(VisualItem.HIGHLIGHT, ColorLib.rgb(255,200,125));
 
 		ColorAction text = new ColorAction("graph.nodes",
@@ -212,14 +242,14 @@ public class GraphView extends JPanel {
 				VisualItem.STROKECOLOR, ColorLib.gray(200));
 
 		NodeSize nodes_size = new NodeSize();
-		
+
 		ActionList color = new ActionList();
 		color.add(text);
 		color.add(edges);
 		color.add(nodes);
 		color.add(nodes_size);
-		
-		
+
+
 		// finally, we register our ActionList with the Visualization.
 		// we can later execute our Actions by invoking a method on our
 		// Visualization, using the name we've chosen below.
@@ -349,7 +379,7 @@ public class GraphView extends JPanel {
 		searchQ.addField("company");
 		searchQ.addField("tags");
 		final SearchTupleSet search = searchQ.getSearchSet(); 
-		
+
 		// create the listener that collects search results into a focus set
 		search.addTupleSetListener(new TupleSetListener() {
 			public void tupleSetChanged(TupleSet t, Tuple[] add, Tuple[] rem) {
@@ -404,7 +434,7 @@ public class GraphView extends JPanel {
 		if(this.parentWindow != null)
 			this.parentWindow.dispose();
 	}
-	
+
 	public void setGraph(Graph g, String label) {
 		// update labeling
 		DefaultRendererFactory drf = (DefaultRendererFactory)
@@ -472,7 +502,7 @@ public class GraphView extends JPanel {
 		menubar.add(dataMenu);
 
 		// launch window
-		
+
 		frame.setJMenuBar(menubar);
 		frame.setContentPane(view);
 		frame.pack();
@@ -522,7 +552,7 @@ public class GraphView extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			Graph g = IOLib.getGraphFile(null);
 			if ( g == null ) return;
-			
+
 			String label = getLabel(m_view, g);
 			if ( label != null ) {
 				JFrame frame = demo(g, label);
@@ -697,7 +727,7 @@ class NodeSize extends SizeAction{
 }
 
 class NodeColor extends DataColorAction{
-	
+
 	private ArrayList<VisualItem> liste = new ArrayList<VisualItem>();
 
 	public NodeColor(String group, String dataField, int dataType,
@@ -705,7 +735,7 @@ class NodeColor extends DataColorAction{
 		super(group, dataField, dataType, colorField, palette);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	@Override
 	public int getColor(VisualItem item) {
 		if(item.getRow()==0) liste.clear();				
@@ -729,8 +759,8 @@ class NodeColor extends DataColorAction{
 
 	}
 
-	
-	
+
+
 }
 
 class NodeInfoControl extends ControlAdapter {
