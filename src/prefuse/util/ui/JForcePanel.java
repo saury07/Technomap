@@ -2,10 +2,15 @@ package prefuse.util.ui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
 
+import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
@@ -54,6 +59,15 @@ public class JForcePanel extends JPanel {
             name = name.substring(name.lastIndexOf(".")+1);
             v.setBorder(BorderFactory.createTitledBorder(name));
             this.add(v);
+            JButton b = new JButton("Size");
+            this.add(b);
+            final JForcePanel fp = this;
+            b.addActionListener(new ActionListener() {
+				
+				public void actionPerformed(ActionEvent arg0) {
+					System.out.println(fp.getSize());
+				}
+			});
         }
     }
     
@@ -71,8 +85,8 @@ public class JForcePanel extends JPanel {
         s.setBackground(Color.WHITE);
         s.putClientProperty("force", f);
         s.putClientProperty("param", new Integer(param));
-        s.setPreferredSize(new Dimension(300,30));
-        s.setMaximumSize(new Dimension(300,30));
+        s.setPreferredSize(new Dimension(200,30));
+        s.setMaximumSize(new Dimension(200,30));
         return s;
     }
     

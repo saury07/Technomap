@@ -8,58 +8,64 @@ xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdr
   <key id="client" for="node" attr.name="client" attr.type="string"/>
   <key id="company" for="node" attr.name="company" attr.type="string"/>
   <key id="description" for="node" attr.name="description" attr.type="string"/>
+  <key id="short_description" for="node" attr.name="short_description" attr.type="string"/>
   <key id="urlproject" for="node" attr.name="urlproject" attr.type="string"/>
 
   <graph id="G" edgedefault="undirected">
  
 <node id="0">
+	  <data key="author">Interactives</data>
+	  <data key="client">Top Trumps</data>
+	  <data key="company">Inition</data>
+	  <data key="description">Winning Moves was founded by four highly respected professionals in the games industry, who between them have over 100 years of experience.Tom Kremer: Europe's most successful game agent. Tom's greatest claim to fame is having found and licensed the Rubik's Cube® from behind the "Iron Curtain." Tom is also a highly talented games creator.Alex Randolph: Europe's most distinguished games inventor who, sadly, died in February 2004.Mike Meyers: The long-time head of research and development for Milton Bradley, one of America's best-known games brands.Phil E. Orbanes: The long-time head of research and development for another of America's great games brands, Parker Brothers. Phil is the world's leading expert on the game Monopoly®, as well as author of several books and creator of best-selling games.With such a wealth of experience, creativity and an unerring instinct for what makes a great game, Winning Moves was established to bring you a mixture of classic games from yesteryear as well as brand new games - games that provide entertainment and fun for you, your family and your friends!In the United Kingdom, Winning Moves is the leading maker of card games, including the immensely popular Top Trumps. Winning Moves also creates limited editions of the world's best-loved game, Monopoly.</data>
+	  <data key="short_description">games with cards and AR</data>
+	  <data key="name">Top Trumps 3D</data>
+	  <data key="tags">  3d, glasses-free 3d, augmented reality, computer vision, 2d</data>
+	  <data key="urlproject">http://www.youtube.com/watch?v=A3PwcPLxa7A</data>
+  </node>
+
+<node id="1">
 	  <data key="author">Bruce Branit</data>
 	  <data key="client"></data>
 	  <data key="company">Branit VFX</data>
 	  <data key="description">Art video of complete virtual reality</data>
+	  <data key="short_description">virtual grass</data>
 	  <data key="name">World Builder</data>
 	  <data key="tags">  glasses-free 3d, virtual reality</data>
 	  <data key="urlproject">http://www.youtube.com/watch?v=CXErST5NST8</data>
   </node>
 
-<node id="1">
+<node id="2">
 	  <data key="author">Pete Woods and co</data>
 	  <data key="client"></data>
 	  <data key="company">"Axis Film and IN, Inition</data>
 	  <data key="description">The fastest car 3D film</data>
+	  <data key="short_description">Fastest Car 3D movie</data>
 	  <data key="name">Fastest Car 3D Movie</data>
 	  <data key="tags"></data>
 	  <data key="urlproject">http://www.youtube.com/watch?v=ikQd8vs1MHw&amp;feature=player_embedded#at=159</data>
   </node>
 
-<node id="2">
+<node id="3">
 	  <data key="author">Marie Brayer</data>
 	  <data key="client">Inition</data>
 	  <data key="company">Inition</data>
 	  <data key="description">Controller free interaction</data>
+	  <data key="short_description">Controller-free interaction with video clips</data>
 	  <data key="name">Pamplemousse</data>
 	  <data key="tags">  augmented reality, computer vision</data>
 	  <data key="urlproject">http://vimeo.com/14579193</data>
   </node>
 
-<node id="3">
+<node id="4">
 	  <data key="author">Alioscopy</data>
 	  <data key="client"></data>
 	  <data key="company">Alioscopy</data>
 	  <data key="description">Actual 3D display without glasses</data>
+	  <data key="short_description">Alioscopy screen</data>
 	  <data key="name">Alioscopy screen</data>
 	  <data key="tags"></data>
 	  <data key="urlproject">http://www.youtube.com/watch?v=9M4Z2pMfj-Q</data>
-  </node>
-
-<node id="4">
-	  <data key="author">Interactives</data>
-	  <data key="client">Top Trumps</data>
-	  <data key="company">Inition</data>
-	  <data key="description">Quizz game using augmented reality and markers</data>
-	  <data key="name">Top Trumps 3D</data>
-	  <data key="tags">  3d, glasses-free 3d, augmented reality, computer vision, 2d</data>
-	  <data key="urlproject">http://www.youtube.com/watch?v=A3PwcPLxa7A</data>
   </node>
 
 <node id="5">
@@ -67,6 +73,7 @@ xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdr
 	  <data key="client">Tissot</data>
 	  <data key="company">Inition</data>
 	  <data key="description">Augmented retail application for Tissot</data>
+	  <data key="short_description">Augmented reality for retail</data>
 	  <data key="name">Holition</data>
 	  <data key="tags">  augmented reality</data>
 	  <data key="urlproject">http://www.youtube.com/watch?v=tdEaAYYgP5c</data>
@@ -77,6 +84,7 @@ xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdr
 	  <data key="client"></data>
 	  <data key="company">Inition</data>
 	  <data key="description">Gesture tracking</data>
+	  <data key="short_description">Motion tracking</data>
 	  <data key="name">Lila</data>
 	  <data key="tags"></data>
 	  <data key="urlproject">http://www.youtube.com/watch?v=vwliqDSRkyE&amp;feature=player_embedded</data>
@@ -87,23 +95,43 @@ xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdr
 	  <data key="client">God</data>
 	  <data key="company">Heaven inc</data>
 	  <data key="description">Grass like 3D</data>
+	  <data key="short_description">some 3D grass</data>
 	  <data key="name"> Grass 3D example</data>
 	  <data key="tags">  glasses-free 3d</data>
 	  <data key="urlproject">http://www.huddletogether.com/projects/lightbox2/images/image-2.jpg</data>
   </node>
 
+<node id="8">
+	  <data key="author">Marie Brayer</data>
+	  <data key="client"></data>
+	  <data key="company"></data>
+	  <data key="description">URIs can also be used by resources to establish relationships between resource representations. For instance a Hotelrepresentation will refer the assigned Room resources by using a URI, not by using a plain Room id. Using a plain id would force the caller to construct a URI by accessing the resource. The caller would not be able to access the resource without additional context knowledge such as the host name or the base URI path.Hyperlinks are used by clients to navigate through the resources. RESTful APIs are hypertext-driven, which means by getting a Hotelrepresentation the client will be able to navigate to the assigned Room representations and the assigned Reservation representations.In practice, classes such as shown in figure 1 will often be mapped in the sense of business objects. This means the URI stays persistent throughout the lifecycle of the business object. If an new resource is created, a new URI will be allocated. After deleting the resource the URI becomes invalid. The URI (a), (b), (c) and (d) are examples of such identifiers. On the other side a URI can also be used to referring object snapshots. For instance the URI (e) and (f) would refer such a snapshot by including a version identifier within the URI.URIs can also addresses "sub" resources as shown in example (b), (c), (d) and (e). Often aggregated objects will be mapped to sub-resources such as the Room which is aggregated by the Hotel. Aggregated objects do not have their own lifecycle and if the parent object is deleted, all aggregated objects will also be deleted.</data>
+	  <data key="short_description">Blublu nlinli bliblib lalalalala</data>
+	  <data key="name">Blublu</data>
+	  <data key="tags">  3d, glasses-free 3d, computer vision</data>
+	  <data key="urlproject"> http://initiondraft.heroku.com/Images/novideo.png </data>
+  </node>
+
 <!-- edges should be defined here-->
 
-<edge source="4" target="0"></edge>
+<edge source="1" target="0"></edge>
+<edge source="3" target="0"></edge>
+<edge source="5" target="0"></edge>
 <edge source="7" target="0"></edge>
-<edge source="4" target="2"></edge>
-<edge source="5" target="2"></edge>
-<edge source="0" target="4"></edge>
-<edge source="2" target="4"></edge>
-<edge source="5" target="4"></edge>
-<edge source="7" target="4"></edge>
-<edge source="2" target="5"></edge>
-<edge source="4" target="5"></edge>
+<edge source="8" target="0"></edge>
+<edge source="0" target="1"></edge>
+<edge source="7" target="1"></edge>
+<edge source="8" target="1"></edge>
+<edge source="0" target="3"></edge>
+<edge source="5" target="3"></edge>
+<edge source="8" target="3"></edge>
+<edge source="0" target="5"></edge>
+<edge source="3" target="5"></edge>
 <edge source="0" target="7"></edge>
-<edge source="4" target="7"></edge></graph>
+<edge source="1" target="7"></edge>
+<edge source="8" target="7"></edge>
+<edge source="0" target="8"></edge>
+<edge source="1" target="8"></edge>
+<edge source="3" target="8"></edge>
+<edge source="7" target="8"></edge></graph>
 </graphml>

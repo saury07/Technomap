@@ -1,6 +1,7 @@
 package prefuse.demos;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class Parser {
 	  "  <key id=\"client\" for=\"node\" attr.name=\"client\" attr.type=\"string\"/>\n" +
 	  "  <key id=\"company\" for=\"node\" attr.name=\"company\" attr.type=\"string\"/>\n" + 
 	  "  <key id=\"description\" for=\"node\" attr.name=\"description\" attr.type=\"string\"/>\n" +
+	  "  <key id=\"short_description\" for=\"node\" attr.name=\"short_description\" attr.type=\"string\"/>\n" +
 	  "  <key id=\"urlproject\" for=\"node\" attr.name=\"urlproject\" attr.type=\"string\"/>\n\n "+
 	  " <graph id=\"G\" edgedefault=\"undirected\">\n ";
 	
@@ -86,6 +88,8 @@ public class Parser {
 			node.client = current.getChild("client").getValue();
 			node.company = current.getChild("company").getValue();
 			node.description = current.getChild("description").getValue();
+			node.short_description = current.getChild("short_description").getValue();
+			System.out.println(node.short_description);
 			node.name = current.getChild("name").getValue();
 			node.url = getUrl(current);
 			//node.id = Integer.parseInt(current.getChild("id").getValue());
@@ -113,14 +117,16 @@ public class Parser {
 	public void write() throws IOException{
 		
 	
-		FileWriter writer = new FileWriter(new File("data/test-writing.xml"));
-		writer.write(Parser.header);
+		//FileWriter writer = new FileWriter(new File("data/test-writing.xml"));
+		FileOutputStream writer = new FileOutputStream(new File("data/test-writing.xml"));
+		writer.write(Parser.header.getBytes("UTF-8"));
 		for(Node n:tree){
 			String value = "\n<node id=\""+n.id+"\">\n";
 			value += "	  <data key=\"author\">" + n.author + "</data>\n";
 			value += "	  <data key=\"client\">" + n.client + "</data>\n";
 			value += "	  <data key=\"company\">" + n.company + "</data>\n";
 			value += "	  <data key=\"description\">" + n.description + "</data>\n";
+			value += "	  <data key=\"short_description\">" + n.short_description + "</data>\n";
 			value += "	  <data key=\"name\">" + n.name + "</data>\n";
 			//tags
 			value += "	  <data key=\"tags\">  ";
@@ -130,12 +136,20 @@ public class Parser {
 			value = value.substring(0, value.length()-2);
 			value += "</data>\n";
 			//fin des tags
-			value += "	  <data key=\"urlproject\">" + n.url + "</data>\n";
+			if(!n.url.equals("http://")){
+				value += "	  <data key=\"urlproject\">" + n.url + "</data>\n";
+			}
+			else{
+				value += "	  <data key=\"urlproject\"> http://initiondraft.heroku.com/Images/novideo.png </data>\n";
+			}
+			
 			value += "  </node>\n";
-			writer.write(value);
+			byte[] bytes = value.getBytes("UTF-8");
+			
+			writer.write(bytes);
 		}
-		writer.write(edges());
-		writer.write(tail);
+		writer.write(edges().getBytes("UTF-8"));
+		writer.write(tail.getBytes("UTF-8"));
 		writer.flush();
 		writer.close();
 	}
@@ -190,6 +204,7 @@ class Node {
 	String client;
 	String company;
 	String description;
+	String short_description;
 	String url;
 	int id;
 	List<Node> aRelier;

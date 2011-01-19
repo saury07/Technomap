@@ -25,7 +25,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.Authenticator;
 import java.net.MalformedURLException;
+import java.net.PasswordAuthentication;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -126,7 +128,7 @@ public class GraphView extends JPanel {
 	public JPanel optionPanel;
 	public JFrame parentWindow;
 	public String pathToGraph;
-	static String webXML = "http://www.google.com";
+	static String webXML = "http://initiondraft.heroku.com/nodes.xml";
 
 	public GraphView(Graph g, String label, JFrame parent){
 		this(g,label);
@@ -140,6 +142,17 @@ public class GraphView extends JPanel {
 		Graph gr1 =null;
 
 		//Let's get the file !
+		Authenticator auth = new Authenticator(){
+
+			@Override
+			protected PasswordAuthentication getPasswordAuthentication() {
+				// TODO Auto-generated method stub
+				System.out.println("Calling auth");
+				return new PasswordAuthentication("admin", "pony".toCharArray());
+			}
+
+		};
+		Authenticator.setDefault(auth);
 		DataInputStream datastream = null;
 		try{
 			URL url = new URL(GraphView.webXML);
@@ -167,6 +180,14 @@ public class GraphView extends JPanel {
 		}
 		else {
 			try {
+				Parser p = new Parser("data/web-output.xml");
+				p.parse();
+				try {
+					p.write();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				gr1 = new GraphMLReader().readGraph("data/test-writing.xml");
 			} catch (DataIOException e1) {
 				// TODO Auto-generated catch block
@@ -256,9 +277,9 @@ public class GraphView extends JPanel {
 		color.add(bordercolor);
 		color.add(nodes);
 		color.add(nodes_size);
-		
+
 		animate.add(nodes);
-		
+
 		// Fonts
 		FontAction font = new FontAction("graph.nodes", FontLib.getFont(
 				"Arial", 20));
@@ -846,7 +867,7 @@ class NodeInfoControl extends ControlAdapter {
 	public void itemEntered(VisualItem item, MouseEvent e) {
 		// TODO Auto-generated method stub
 		super.itemEntered(item, e);
-		
+
 	}
 
 	private JPanel generatePaneFromNode(VisualItem item){
@@ -890,7 +911,7 @@ class NodeInfoControl extends ControlAdapter {
 		subTitle.setAlignmentX(1f);
 
 		JTextArea description = new JTextArea(2,15);
-		description.setText(""+item.get("description"));
+		description.setText(""+item.get("short_description"));
 		description.setEditable(false);
 		description.setLineWrap(true);
 		description.setWrapStyleWord(true);
@@ -898,7 +919,7 @@ class NodeInfoControl extends ControlAdapter {
 		description.setOpaque(false);
 
 		JTextArea area = new JTextArea(20,15);
-		area.setText(""+item.get("tags"));
+		area.setText(""+item.get("description"));
 		area.setEditable(false);
 		area.setLineWrap(true);
 		area.setWrapStyleWord(true);
@@ -907,6 +928,9 @@ class NodeInfoControl extends ControlAdapter {
 		sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		area.setCaretPosition(0);
 		sp.setAlignmentX(1f);
+		sp.setOpaque(false);
+		sp.getViewport().setOpaque(false);
+		sp.setBorder(BorderFactory.createEmptyBorder());
 
 		JLabel author = new JLabel("<html><b>Author : </b>"+item.get("author")+"</html>");
 		author.setAlignmentX(1f);
@@ -948,9 +972,15 @@ class NodeInfoControl extends ControlAdapter {
 			url = new URL(getImage(""+item.get("urlproject")));
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
+			try {
+				url = new URL("http://initiondraft.heroku.com/Images/novideo.png");
+			} catch (MalformedURLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 		}
-		//System.out.println(url);
+		System.out.println(url);
 		Image ret = java.awt.Toolkit.getDefaultToolkit().getDefaultToolkit().createImage(url);
 		ret = ret.getScaledInstance(140, 100, 0);
 		return ret;
