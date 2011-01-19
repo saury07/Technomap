@@ -60,7 +60,7 @@ public class JForcePanel extends JPanel {
             v.setBorder(BorderFactory.createTitledBorder(name));
             this.add(v);
             JButton b = new JButton("Size");
-            this.add(b);
+            //this.add(b);
             final JForcePanel fp = this;
             b.addActionListener(new ActionListener() {
 				

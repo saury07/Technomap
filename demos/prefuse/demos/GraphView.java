@@ -58,6 +58,14 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultStyledDocument;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyleContext;
+import javax.swing.text.StyledDocument;
+
+import com.sun.tools.javac.main.JavacOption.Option;
 
 import prefuse.Constants;
 import prefuse.Display;
@@ -133,6 +141,73 @@ public class GraphView extends JPanel {
 	public GraphView(Graph g, String label, JFrame parent){
 		this(g,label);
 		this.parentWindow = parent;
+	}
+	
+	private class OptionPane extends Object{
+		protected String name;
+		protected JPanel panel;
+		
+		public String getName() {
+			return name;
+		}
+		
+		public JPanel getPanel() {
+			return panel;
+		}
+
+		public OptionPane(String name, JPanel pane){
+			this.name = name;
+			this.panel = pane;
+		}
+		
+	}
+	
+	public JPanel buildOptionPanel(final JPanel superContainer, final OptionPane... panes){
+		JPanel retour = new JPanel(){
+			protected void paintComponent(Graphics g){
+				Graphics2D gr = (Graphics2D) g;
+				int w = getWidth( );
+				int h = getHeight( );
+
+				// Paint a gradient from top to bottom
+				GradientPaint gp = new GradientPaint(
+						0, 0, Color.white,
+						0, h, ColorLib.getGrayscale(230) );
+
+				gr.setPaint( gp );
+				gr.fillRect( 0, 0, w, h );
+				this.setOpaque(false);
+				super.paintComponent(g);
+				this.setOpaque(true);
+			}
+		};
+		
+		GridLayout mainLay = new GridLayout(panes.length+1,1);
+		retour.setLayout(mainLay);
+		
+		JLabel title = new JLabel("Inition Technomap");
+		retour.add(title);
+		JButton[] buttons = new JButton[panes.length];
+		for(int i =0; i<panes.length;i++){
+			buttons[i] = new JButton(panes[i].getName());
+			if(null != panes[i].getPanel()){
+				final int index = i;
+				buttons[i].addActionListener(new ActionListener() {
+					
+					public void actionPerformed(ActionEvent arg0) {
+						superContainer.removeAll();
+						superContainer.repaint();
+						superContainer.add(panes[index].getPanel());
+						superContainer.validate();
+					}
+				});
+			}
+			retour.add(buttons[i]);
+		}
+		
+		
+		retour.setPreferredSize(new Dimension(220,600));
+		return retour;
 	}
 
 	public GraphView(Graph g, String label) {
@@ -342,8 +417,9 @@ public class GraphView extends JPanel {
 		// create a panel for editing force values
 		ForceSimulator fsim = ((ForceDirectedLayout)animate.get(0)).getForceSimulator();
 		JForcePanel fpanel = new JForcePanel(fsim);
-		this.optionPanel = fpanel;
-		this.optionPanel.setOpaque(false);
+		
+		
+		
 		this.rightPanel = new JPanel(){
 			protected void paintComponent(Graphics g){
 				Graphics2D gr = (Graphics2D) g;
@@ -362,6 +438,13 @@ public class GraphView extends JPanel {
 				this.setOpaque(true);
 			}
 		};
+		OptionPane allOptionPanel = new OptionPane("All projects", null);
+		OptionPane technologyOptionPanel = new OptionPane("Technologies",null);
+		OptionPane marketOptionPanel = new OptionPane("Market",null);
+		OptionPane prefuseOptionPanel = new OptionPane("Prefuse",fpanel);
+		prefuseOptionPanel.getPanel().setOpaque(false);
+		
+		this.optionPanel = buildOptionPanel(this.rightPanel,prefuseOptionPanel);
 		this.rightPanel.add(this.optionPanel);
 		//        JPanel opanel = new JPanel();
 		//        opanel.setBorder(BorderFactory.createTitledBorder("Overview"));
@@ -382,8 +465,8 @@ public class GraphView extends JPanel {
 		Box cf = new Box(BoxLayout.Y_AXIS);
 		cf.add(slider);
 		cf.setBorder(BorderFactory.createTitledBorder("Connectivity Filter"));
-		fpanel.add(cf);
-
+		//fpanel.add(cf);
+		//fpanel.add()
 		//fpanel.add(opanel);
 
 		fpanel.add(Box.createVerticalGlue());
@@ -403,7 +486,7 @@ public class GraphView extends JPanel {
 		split.setRightComponent(this.rightPanel);
 		split.setOneTouchExpandable(true);
 		split.setContinuousLayout(false);
-		split.setDividerLocation(800);
+		split.setDividerLocation(700);
 
 		//create the node viewer panel
 		JPanel fp2 = new JPanel();
@@ -878,6 +961,9 @@ class NodeInfoControl extends ControlAdapter {
 
 		mainBox.setAlignmentX(0.5f);
 
+		String fontHead = "<font face=\"Futura\">";
+		String fontTail = "</font>";
+
 		JLabel title = new JLabel(title(""+item.get("name")));
 		title.setAlignmentX(1f);
 
@@ -907,11 +993,14 @@ class NodeInfoControl extends ControlAdapter {
 		picture.setHorizontalAlignment(SwingConstants.LEFT);
 		picture.setText("<html></html>");
 
-		JLabel subTitle = new JLabel(bold(""+item.get("client")));
+		JLabel subTitle = new JLabel(html("<b>"+fontHead+item.get("client"))+fontTail+"</b>");
 		subTitle.setAlignmentX(1f);
 
+		
 		JTextArea description = new JTextArea(2,15);
+		
 		description.setText(""+item.get("short_description"));
+
 		description.setEditable(false);
 		description.setLineWrap(true);
 		description.setWrapStyleWord(true);
@@ -932,7 +1021,7 @@ class NodeInfoControl extends ControlAdapter {
 		sp.getViewport().setOpaque(false);
 		sp.setBorder(BorderFactory.createEmptyBorder());
 
-		JLabel author = new JLabel("<html><b>Author : </b>"+item.get("author")+"</html>");
+		JLabel author = new JLabel("<html><font face=\"futura\"><b>Author : </b>"+item.get("author")+"</font></html>");
 		author.setAlignmentX(1f);
 
 
@@ -955,14 +1044,10 @@ class NodeInfoControl extends ControlAdapter {
 	}
 
 	private String title(String text){
-		return "<html><h1>"+text+"</h1></html>";
+		return "<html><h1><font face=\"Futura\">"+text+"</font></h1></html>";
 	}
 
-	private String bold(String text){
-		return "<html><b>"+text+"</b></html>";
-	}
-
-	private String normal(String text){
+	private String html(String text){
 		return "<html>"+text+"</html>";
 	}
 

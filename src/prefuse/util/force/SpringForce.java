@@ -14,9 +14,9 @@ public class SpringForce extends AbstractForce {
     public static final float DEFAULT_SPRING_COEFF = 1E-4f;
     public static final float DEFAULT_MAX_SPRING_COEFF = 1E-3f;
     public static final float DEFAULT_MIN_SPRING_COEFF = 1E-5f;
-    public static final float DEFAULT_SPRING_LENGTH = 100;
+    public static final float DEFAULT_SPRING_LENGTH = 300;
     public static final float DEFAULT_MIN_SPRING_LENGTH = 0;
-    public static final float DEFAULT_MAX_SPRING_LENGTH = 200;
+    public static final float DEFAULT_MAX_SPRING_LENGTH = 800;
     public static final int SPRING_COEFF = 0;
     public static final int SPRING_LENGTH = 1;
     
