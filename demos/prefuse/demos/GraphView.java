@@ -185,9 +185,9 @@ public class GraphView extends JPanel {
 		GridLayout mainLay = new GridLayout(panes.length+1,1);
 		retour.setLayout(mainLay);
 		
-		JLabel title = new JLabel("Inition Technomap");
+		JLabel title = new JLabel(new ImageIcon("data/Images/initionlogo.png"));
 		retour.add(title);
-		JButton[] buttons = new JButton[panes.length];
+		final JButton[] buttons = new JButton[panes.length];
 		for(int i =0; i<panes.length;i++){
 			buttons[i] = new JButton(panes[i].getName());
 			if(null != panes[i].getPanel()){
@@ -195,6 +195,10 @@ public class GraphView extends JPanel {
 				buttons[i].addActionListener(new ActionListener() {
 					
 					public void actionPerformed(ActionEvent arg0) {
+						for(int i = 0; i< panes.length; i++){
+							buttons[i].setSelected(false);
+						}
+						//buttons[index].setSelected(true);
 						superContainer.removeAll();
 						superContainer.repaint();
 						superContainer.add(panes[index].getPanel());
@@ -202,6 +206,7 @@ public class GraphView extends JPanel {
 					}
 				});
 			}
+			buttons[0].setSelected(true);
 			retour.add(buttons[i]);
 		}
 		
@@ -441,10 +446,11 @@ public class GraphView extends JPanel {
 		OptionPane allOptionPanel = new OptionPane("All projects", null);
 		OptionPane technologyOptionPanel = new OptionPane("Technologies",null);
 		OptionPane marketOptionPanel = new OptionPane("Market",null);
-		OptionPane prefuseOptionPanel = new OptionPane("Prefuse",fpanel);
+		OptionPane prefuseOptionPanel = new OptionPane("Settings",fpanel);
 		prefuseOptionPanel.getPanel().setOpaque(false);
 		
-		this.optionPanel = buildOptionPanel(this.rightPanel,prefuseOptionPanel);
+		this.optionPanel = buildOptionPanel(this.rightPanel,allOptionPanel,
+				technologyOptionPanel, marketOptionPanel, prefuseOptionPanel);
 		this.rightPanel.add(this.optionPanel);
 		//        JPanel opanel = new JPanel();
 		//        opanel.setBorder(BorderFactory.createTitledBorder("Overview"));

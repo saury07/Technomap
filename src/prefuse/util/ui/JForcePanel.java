@@ -10,8 +10,10 @@ import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -46,6 +48,7 @@ public class JForcePanel extends JPanel {
      */
     private void initUI() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		//this.add(title);
         Force[] forces = fsim.getForces();
         for ( int i=0; i<forces.length; i++ ) {
             Force f = forces[i];
@@ -59,15 +62,9 @@ public class JForcePanel extends JPanel {
             name = name.substring(name.lastIndexOf(".")+1);
             v.setBorder(BorderFactory.createTitledBorder(name));
             this.add(v);
-            JButton b = new JButton("Size");
-            //this.add(b);
+          
             final JForcePanel fp = this;
-            b.addActionListener(new ActionListener() {
-				
-				public void actionPerformed(ActionEvent arg0) {
-					System.out.println(fp.getSize());
-				}
-			});
+        
         }
     }
     
