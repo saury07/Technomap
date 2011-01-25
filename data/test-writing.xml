@@ -101,37 +101,6 @@ xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdr
 	  <data key="urlproject">http://www.huddletogether.com/projects/lightbox2/images/image-2.jpg</data>
   </node>
 
-<node id="8">
-	  <data key="author">Marie Brayer</data>
-	  <data key="client"></data>
-	  <data key="company"></data>
-	  <data key="description">URIs can also be used by resources to establish relationships between resource representations. For instance a Hotelrepresentation will refer the assigned Room resources by using a URI, not by using a plain Room id. Using a plain id would force the caller to construct a URI by accessing the resource. The caller would not be able to access the resource without additional context knowledge such as the host name or the base URI path.Hyperlinks are used by clients to navigate through the resources. RESTful APIs are hypertext-driven, which means by getting a Hotelrepresentation the client will be able to navigate to the assigned Room representations and the assigned Reservation representations.In practice, classes such as shown in figure 1 will often be mapped in the sense of business objects. This means the URI stays persistent throughout the lifecycle of the business object. If an new resource is created, a new URI will be allocated. After deleting the resource the URI becomes invalid. The URI (a), (b), (c) and (d) are examples of such identifiers. On the other side a URI can also be used to referring object snapshots. For instance the URI (e) and (f) would refer such a snapshot by including a version identifier within the URI.URIs can also addresses "sub" resources as shown in example (b), (c), (d) and (e). Often aggregated objects will be mapped to sub-resources such as the Room which is aggregated by the Hotel. Aggregated objects do not have their own lifecycle and if the parent object is deleted, all aggregated objects will also be deleted.</data>
-	  <data key="short_description">Blublu nlinli bliblib lalalalala</data>
-	  <data key="name">Blublu</data>
-	  <data key="tags">  3d, glasses-free 3d, computer vision</data>
-	  <data key="urlproject"> http://initiondraft.heroku.com/Images/novideo.png </data>
-  </node>
-
 <!-- edges should be defined here-->
-
-<edge source="1" target="0"></edge>
-<edge source="3" target="0"></edge>
-<edge source="5" target="0"></edge>
-<edge source="7" target="0"></edge>
-<edge source="8" target="0"></edge>
-<edge source="0" target="1"></edge>
-<edge source="7" target="1"></edge>
-<edge source="8" target="1"></edge>
-<edge source="0" target="3"></edge>
-<edge source="5" target="3"></edge>
-<edge source="8" target="3"></edge>
-<edge source="0" target="5"></edge>
-<edge source="3" target="5"></edge>
-<edge source="0" target="7"></edge>
-<edge source="1" target="7"></edge>
-<edge source="8" target="7"></edge>
-<edge source="0" target="8"></edge>
-<edge source="1" target="8"></edge>
-<edge source="3" target="8"></edge>
-<edge source="7" target="8"></edge></graph>
+</graph>
 </graphml>

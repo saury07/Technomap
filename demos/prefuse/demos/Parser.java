@@ -16,6 +16,9 @@ import org.jdom.input.SAXBuilder;
 
 
 public class Parser {
+	public static final int TECHNOLOGIES = 0;
+	public static final int MARKETS = 1;
+	public static final int ALL = 2;
 	
 	private Document document;
 	private Element racine;
@@ -107,6 +110,17 @@ public class Parser {
 				node.technology_tags.add(current2.getValue());
 				}
 			}
+			List<Element> marketTags = current.getChild("tags").getChildren("market_tag");
+			Iterator<Element> it3 = marketTags.iterator();
+			
+			node.market_tags = new ArrayList<String>();
+			
+			while(it3.hasNext()){
+				Element current3 = it3.next();
+				if(!current3.getValue().equals("")){
+				node.market_tags.add(current3.getValue());
+				}
+			}
 			
 			tree.add(node);
 		}
@@ -114,11 +128,23 @@ public class Parser {
 		
 	}
 	
-	public void write() throws IOException{
+	public void write(int type) throws IOException{
 		
 	
 		//FileWriter writer = new FileWriter(new File("data/test-writing.xml"));
-		FileOutputStream writer = new FileOutputStream(new File("data/test-writing.xml"));
+		FileOutputStream writer=null;
+		switch(type){
+		case Parser.ALL:
+			writer = new FileOutputStream(new File("data/test-writing-all.xml"));
+			;break;
+		case Parser.TECHNOLOGIES:
+			writer = new FileOutputStream(new File("data/test-writing-tech.xml"));
+			;break;
+		case Parser.MARKETS:
+			writer = new FileOutputStream(new File("data/test-writing-market.xml"));
+			;break;
+		}
+		
 		writer.write(Parser.header.getBytes("UTF-8"));
 		for(Node n:tree){
 			String value = "\n<node id=\""+n.id+"\">\n";
@@ -148,18 +174,30 @@ public class Parser {
 			
 			writer.write(bytes);
 		}
-		writer.write(edges().getBytes("UTF-8"));
+		writer.write(edges(type).getBytes("UTF-8"));
 		writer.write(tail.getBytes("UTF-8"));
 		writer.flush();
 		writer.close();
 	}
 	
-	private String edges(){
+	private String edges(int type){
 		
 		String aRetourner = "\n<!-- edges should be defined here-->\n";
 		for(Node n:tree){
 			for(Node m:tree){
-				int distance = calculDistance(n, m);
+				int distance = -1;
+				if(type == Parser.TECHNOLOGIES){
+					distance = calculDistanceTech(n, m);
+				}
+				else{
+					if(type == Parser.MARKETS){
+						distance = calculDistanceMarket(n, m);
+					}
+					else{
+						distance = calculDistanceAll(n, m);
+					}
+				}
+				
 				if(distance > 0 && (m.id != n.id)){
 					aRetourner+="\n"+"<edge source=\""+m.id+"\" target=\""+n.id+"\"></edge>";
 				}
@@ -172,7 +210,7 @@ public class Parser {
 		
 	}
 	
-	private int calculDistance(Node n, Node m) {
+	private int calculDistanceTech(Node n, Node m) {
 		
 		int count = 0;
 		
@@ -183,12 +221,38 @@ public class Parser {
 		
 		return count;
 	}
+private int calculDistanceAll(Node n, Node m) {
+		
+		int count = 0;
+		
+		for(String t:n.technology_tags){
+			
+			if(m.technology_tags.contains(t)) count ++;
+		}
+		for(String t:n.market_tags){
+			
+			if(m.market_tags.contains(t)) count ++;
+		}
+		
+		return count;
+	}
+private int calculDistanceMarket(Node n, Node m) {
+	
+	int count = 0;
+	
+	for(String t:n.market_tags){
+		
+		if(m.market_tags.contains(t)) count ++;
+	}
+	
+	return count;
+}
 
 	public static void main(String[] args){
 		Parser p = new Parser("data/web-test.xml");
 		p.parse();
 		try {
-			p.write();
+			p.write(Parser.ALL);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -200,6 +264,7 @@ public class Parser {
 class Node {
 	String name;
 	List<String> technology_tags;
+	List<String> market_tags;
 	String author;
 	String client;
 	String company;

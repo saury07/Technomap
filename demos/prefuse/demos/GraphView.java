@@ -131,6 +131,8 @@ public class GraphView extends JPanel {
 	private static final String node_criteria = "name";
 	private static final String color_criteria = "author";
 
+	final ActionListener[] listeners = new ActionListener[4];
+
 	private Visualization m_vis;
 	public JPanel rightPanel;
 	public JPanel optionPanel;
@@ -142,15 +144,15 @@ public class GraphView extends JPanel {
 		this(g,label);
 		this.parentWindow = parent;
 	}
-	
+
 	private class OptionPane extends Object{
 		protected String name;
 		protected JPanel panel;
-		
+
 		public String getName() {
 			return name;
 		}
-		
+
 		public JPanel getPanel() {
 			return panel;
 		}
@@ -159,9 +161,9 @@ public class GraphView extends JPanel {
 			this.name = name;
 			this.panel = pane;
 		}
-		
+
 	}
-	
+
 	public JPanel buildOptionPanel(final JPanel superContainer, final OptionPane... panes){
 		JPanel retour = new JPanel(){
 			protected void paintComponent(Graphics g){
@@ -181,10 +183,10 @@ public class GraphView extends JPanel {
 				this.setOpaque(true);
 			}
 		};
-		
+
 		GridLayout mainLay = new GridLayout(panes.length+1,1);
 		retour.setLayout(mainLay);
-		
+
 		JLabel title = new JLabel(new ImageIcon("data/Images/initionlogo.png"));
 		retour.add(title);
 		final JButton[] buttons = new JButton[panes.length];
@@ -193,10 +195,10 @@ public class GraphView extends JPanel {
 			if(null != panes[i].getPanel()){
 				final int index = i;
 				buttons[i].addActionListener(new ActionListener() {
-					
+
 					public void actionPerformed(ActionEvent arg0) {
 						for(int i = 0; i< panes.length; i++){
-							buttons[i].setSelected(false);
+							//buttons[i].setSelected(false);
 						}
 						//buttons[index].setSelected(true);
 						superContainer.removeAll();
@@ -206,11 +208,20 @@ public class GraphView extends JPanel {
 					}
 				});
 			}
-			buttons[0].setSelected(true);
+			else{
+				buttons[i].addActionListener(listeners[i]);
+				buttons[i].addActionListener(new ActionListener() {
+					
+					public void actionPerformed(ActionEvent arg0) {
+						//buttons[i].setSelected(true);
+					}
+				});
+			}
+			//buttons[0].setSelected(true);
 			retour.add(buttons[i]);
 		}
-		
-		
+
+
 		retour.setPreferredSize(new Dimension(220,600));
 		return retour;
 	}
@@ -220,7 +231,8 @@ public class GraphView extends JPanel {
 
 
 		Graph gr1 =null;
-
+		Graph gr2 = null;
+		Graph gr3 = null;
 		//Let's get the file !
 		Authenticator auth = new Authenticator(){
 
@@ -260,15 +272,24 @@ public class GraphView extends JPanel {
 		}
 		else {
 			try {
-				Parser p = new Parser("data/web-output.xml");
-				p.parse();
+				Parser p1 = new Parser("data/web-output.xml");
+				p1.parse();
+				Parser p2 = new Parser("data/web-output.xml");
+				p2.parse();
+				Parser p3 = new Parser("data/web-output.xml");
+				p3.parse();
+
 				try {
-					p.write();
+					p1.write(Parser.ALL);
+					p2.write(Parser.TECHNOLOGIES);
+					p3.write(Parser.MARKETS);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				gr1 = new GraphMLReader().readGraph("data/test-writing.xml");
+				gr1 = new GraphMLReader().readGraph("data/test-writing-all.xml");
+				gr2 = new GraphMLReader().readGraph("data/test-writing-tech.xml");
+				gr3 = new GraphMLReader().readGraph("data/test-writing-market.xml");
 			} catch (DataIOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -277,6 +298,33 @@ public class GraphView extends JPanel {
 			//System.out.println("On prend le graph defaut");
 		}
 		final Graph gr = gr1;
+		final Graph gr2_f = gr2;
+		final Graph gr3_f = gr3;
+		
+		listeners[0] = new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				demo(gr, "author");
+				close();
+			}
+		};
+		listeners[1] = new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				//setGraph(gr2_f, "author");
+				demo(gr2_f, "author");
+				close();
+			}
+		};
+		listeners[2] = new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				demo(gr3_f, "author");
+				close();
+
+			}
+		};
+
 		// create a new, empty visualization for our data
 		m_vis = new Visualization();
 
@@ -322,7 +370,7 @@ public class GraphView extends JPanel {
 
 
 		ActionList draw = new ActionList();
-		draw.add(filter);
+		//draw.add(filter);
 		ActionList animate = new ActionList(Activity.INFINITY);
 		animate.add(new ForceDirectedLayout(graph));
 		//animate.add(fill);
@@ -422,9 +470,9 @@ public class GraphView extends JPanel {
 		// create a panel for editing force values
 		ForceSimulator fsim = ((ForceDirectedLayout)animate.get(0)).getForceSimulator();
 		JForcePanel fpanel = new JForcePanel(fsim);
-		
-		
-		
+
+
+
 		this.rightPanel = new JPanel(){
 			protected void paintComponent(Graphics g){
 				Graphics2D gr = (Graphics2D) g;
@@ -448,7 +496,7 @@ public class GraphView extends JPanel {
 		OptionPane marketOptionPanel = new OptionPane("Market",null);
 		OptionPane prefuseOptionPanel = new OptionPane("Settings",fpanel);
 		prefuseOptionPanel.getPanel().setOpaque(false);
-		
+
 		this.optionPanel = buildOptionPanel(this.rightPanel,allOptionPanel,
 				technologyOptionPanel, marketOptionPanel, prefuseOptionPanel);
 		this.rightPanel.add(this.optionPanel);
@@ -484,6 +532,7 @@ public class GraphView extends JPanel {
 
 		// create a new JSplitPane to present the interface
 		JSplitPane split = new JSplitPane();
+		split.setDividerSize(0);
 		JPanel leftPanel = new JPanel();
 		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
 		leftPanel.add(display);
@@ -561,11 +610,11 @@ public class GraphView extends JPanel {
 
 		add(split);
 		// now we run our action list
-		m_vis.run("draw");
+
 		m_vis.run("color");
 		m_vis.run("font");
 		m_vis.run("stroke");
-
+		m_vis.run("draw");
 	}
 
 	public void close(){
@@ -1002,9 +1051,9 @@ class NodeInfoControl extends ControlAdapter {
 		JLabel subTitle = new JLabel(html("<b>"+fontHead+item.get("client"))+fontTail+"</b>");
 		subTitle.setAlignmentX(1f);
 
-		
+
 		JTextArea description = new JTextArea(2,15);
-		
+
 		description.setText(""+item.get("short_description"));
 
 		description.setEditable(false);
